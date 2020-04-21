@@ -1,12 +1,29 @@
 package main
-import "fmt"
+
+import (
+	"encoding/json"
+	"log"
+
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
+)
+
+type body struct {
+	Message string `json:"message"`
+}
+
+// Handler is the Lambda function handler
+func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	log.Println("Lambda request", request.RequestContext.RequestID)
+
+	b, _ := json.Marshal(body{Message: "hello world"})
+
+	return events.APIGatewayProxyResponse{
+		Body:       string(b),
+		StatusCode: 200,
+	}, nil
+}
 
 func main() {
-  fmt.Println("hello world from golang")
-  fmt.Println("1+1 =", 1+1)
-  fmt.Println("7.0/3.0 =", 7.0/3.0)
-  fmt.Println(true && false)
-  fmt.Println(true || false)
-  fmt.Println(!true)
-  fmt.Println("good bye from golang")
+	lambda.Start(Handler)
 }
