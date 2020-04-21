@@ -1,2 +1,2 @@
-# membership-service
-Service to manage membership. This services allows CRUD operation on members.
+# go-lambda
+Example of lambda that handles API events.
